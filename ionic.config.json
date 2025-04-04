@@ -1,0 +1,8 @@
+{
+  "name": "CarteraElectro",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "d6e6632a"
+}
