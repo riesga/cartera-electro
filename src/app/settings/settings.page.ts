@@ -3,6 +3,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { personCircle, personCircleOutline, sunny, sunnyOutline } from 'ionicons/icons';
+import { Preferences } from '@capacitor/preferences';
+import { ThemeService } from '../services/theme.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-settings',
@@ -14,58 +17,39 @@ export class SettingsPage implements OnInit {
   paletteToggle = false;
   highContrastPaletteToggle = false;
 
-  constructor() {
+  private subscriptions: Subscription[] = [];
+
+  constructor(private themeService: ThemeService) {
     // Register icons for use in the application
     addIcons({ personCircle, personCircleOutline, sunny, sunnyOutline });
   }
 
-  ngOnInit() {
-    // Use matchMedia to check the user preference
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    const prefersHighContrast = window.matchMedia('(prefers-contrast: more)');
-
-    // Initialize the dark palette based on the initial
-    // value of the prefers-color-scheme media query
-    this.initializeDarkPalette(prefersDark.matches);
-    this.initializeHighContrastPalette(prefersHighContrast.matches);
-
-    // Listen for changes to the prefers-color-scheme media query
-    prefersDark.addEventListener('change', (mediaQuery) => this.initializeDarkPalette(mediaQuery.matches));
-    prefersHighContrast.addEventListener('change', (mediaQuery) =>
-      this.initializeHighContrastPalette(mediaQuery.matches)
+  async ngOnInit() {
+    // Suscribirse a los cambios de tema
+    this.subscriptions.push(
+      this.themeService.darkMode$.subscribe(isDark => {
+        this.paletteToggle = isDark;
+      }),
+      this.themeService.highContrast$.subscribe(isHighContrast => {
+        this.highContrastPaletteToggle = isHighContrast;
+      })
     );
   }
 
-  // Check/uncheck the toggle and update the palette based on isDark
-  initializeDarkPalette(isDark: boolean) {
-    this.paletteToggle = isDark;
-    this.toggleDarkPalette(isDark);
+  ngOnDestroy() {
+    // Limpiar suscripciones
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  // Listen for the toggle check/uncheck to toggle the dark palette
-  toggleChange(event: CustomEvent) {
-    this.toggleDarkPalette(event.detail.checked);
+  // Escuchar cambios en el toggle de modo oscuro
+  async toggleChange(event: CustomEvent) {
+    const isDark = event.detail.checked;
+    await this.themeService.setDarkMode(isDark);
   }
 
-  // Add or remove the "ion-palette-dark" class on the html element
-  toggleDarkPalette(shouldAdd: boolean) {
-    document.documentElement.classList.toggle('ion-palette-dark', shouldAdd);
+  // Escuchar cambios en el toggle de alto contraste
+  async highContrastPaletteToggleChange(event: CustomEvent) {
+    const isHighContrast = event.detail.checked;
+    await this.themeService.setHighContrast(isHighContrast);
   }
-
-  // Check/uncheck the toggle and update the palette based on isHighContrast
-  initializeHighContrastPalette(isHighContrast: boolean) {
-    this.highContrastPaletteToggle = isHighContrast;
-    this.toggleHighContrastPalette(isHighContrast);
-  }
-
-  // Listen for the toggle check/uncheck to toggle the high contrast palette
-  highContrastPaletteToggleChange(event: CustomEvent) {
-    this.toggleHighContrastPalette(event.detail.checked);
-  }
-
-  // Add or remove the "ion-palette-high-contrast" class on the html element
-  toggleHighContrastPalette(shouldAdd: boolean) {
-    document.documentElement.classList.toggle('ion-palette-high-contrast', shouldAdd);
-  }
-
 }
