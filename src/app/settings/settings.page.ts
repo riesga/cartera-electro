@@ -16,6 +16,8 @@ import { Subscription } from 'rxjs';
 export class SettingsPage implements OnInit {
   paletteToggle = false;
   highContrastPaletteToggle = false;
+  brightnessValue = 0.5; // Valor por defecto
+  autoBrightnessEnabled = false;
 
   private subscriptions: Subscription[] = [];
 
@@ -32,8 +34,15 @@ export class SettingsPage implements OnInit {
       }),
       this.themeService.highContrast$.subscribe(isHighContrast => {
         this.highContrastPaletteToggle = isHighContrast;
+      }),
+      this.themeService.brightness$.subscribe(brightness => {
+        this.brightnessValue = brightness;
       })
     );
+
+    // Obtener el brillo actual
+    this.brightnessValue = await this.themeService.getCurrentBrightness();
+        
   }
 
   ngOnDestroy() {
@@ -52,4 +61,11 @@ export class SettingsPage implements OnInit {
     const isHighContrast = event.detail.checked;
     await this.themeService.setHighContrast(isHighContrast);
   }
+
+  // Método para cambiar el brillo
+  async onBrightnessChange(event: Event) {
+    const value = (event.target as HTMLIonRangeElement).value as number;
+    await this.themeService.setBrightness(value);
+  }
+
 }

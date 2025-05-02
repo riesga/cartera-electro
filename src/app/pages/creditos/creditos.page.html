@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      CC/Nit: {{nro_identificacion}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">  
+  <div *ngFor="let item of (results | async)" class="ion-margin-bottom">
+    <ion-card [routerLink]="['/', 'abonos', item.codigo]" class="ion-no-margin" style="width: 100%;">
+      <ion-card-header color="light">
+        <ion-card-title>
+          <ion-icon name="card-outline" color="primary" size="large" class="ion-padding-end"></ion-icon>
+          <strong>Crédito: {{ item.codigo }}</strong>
+        </ion-card-title>
+        <ion-card-subtitle>
+          <ion-badge color="success">
+            <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+            Activo
+          </ion-badge>
+        </ion-card-subtitle>
+      </ion-card-header>
+      
+      <ion-card-content>          
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-md="4">
+              <ion-item lines="none">
+                <ion-icon name="calendar-outline" slot="start" color="tertiary"></ion-icon>
+                <ion-label>
+                  <h3>Fecha crédito</h3>
+                  <p>{{ item.fecha | date:'mediumDate'}}</p>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            
+            <ion-col size="12" size-md="4">
+              <ion-item lines="none">
+                <ion-icon name="cash-outline" slot="start" color="success"></ion-icon>
+                <ion-label>
+                  <h3>Valor total</h3>
+                  <p>{{ item.valor | currency }}</p>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            
+            <ion-col size="12" size-md="4">
+              <ion-item lines="none">
+                <ion-icon name="wallet-outline" slot="start" color="warning"></ion-icon>
+                <ion-label>
+                  <h3>Saldo</h3>
+                  <p>{{ item.saldo | currency }}</p>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </div>
+      
+  <ion-card *ngIf="(results| async)?.length == 0" class="ion-text-center ion-padding">
+    <ion-icon name="alert-circle-outline" color="warning" size="large"></ion-icon>
+    <ion-card-content>
+      <h2>No presenta créditos activos</h2>
+      <p>Este cliente no tiene créditos vigentes en el sistema</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

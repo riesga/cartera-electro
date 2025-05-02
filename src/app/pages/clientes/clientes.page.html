@@ -1,0 +1,63 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Clientes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-select label="Buscar por:" [(ngModel)]="type">  
+      <ion-select-option value="nro_identificacion">Número de identificación</ion-select-option>
+      <ion-select-option value="nombre">Nombres o apellidos</ion-select-option>       
+      <ion-select-option value="codigo">Codigo Nota a Entrega</ion-select-option>         
+    </ion-select>
+  </ion-item>
+  <ion-searchbar id="searchBar" animated="true" placeholder="Consultar cliente" color="light" [debounce]="1000" [(ngModel)]="searchTerm" show-clear-button="always" clear-icon="trash-bin" (ionBlur)="searchChanged()" (keyup.enter)="searchChanged()"></ion-searchbar>
+   
+  <!-- Lista de resultados mejorada -->
+  <div class="ion-margin-top">
+    <h4 class="ion-padding-start">
+      <ion-icon name="list-outline" color="success"></ion-icon>
+      Resultados
+    </h4>
+    
+    <ion-list>
+      <ion-item-sliding *ngFor="let item of (results | async)" >
+        <ion-item button [routerLink]="['/', 'creditos', item.nro_identificacion]" detail="true" lines="full"> 
+          <ion-avatar slot="start">
+            <ion-icon name="person" color="primary" style="font-size: 2em; background: #f8f8f8; border-radius: 50%; padding: 8px;"></ion-icon>
+          </ion-avatar>
+          <ion-label text-wrap>
+            <h2 class="ion-text-wrap"><strong>{{ item.nombre }}</strong></h2>
+            <p>
+              <ion-badge color="tertiary">
+                <ion-icon name="id-card-outline" slot="start"></ion-icon>
+                {{ item.nro_identificacion }}
+              </ion-badge>
+            </p>
+          </ion-label>
+        </ion-item>
+        
+        <ion-item-options side="end">
+          <ion-item-option color="success" [routerLink]="['/', 'creditos', item.nro_identificacion]">
+            <ion-icon slot="icon-only" name="card-outline" color="success"></ion-icon>
+            Ver Créditos
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+    
+    <!-- Mensaje cuando no hay resultados -->
+    <ion-card *ngIf="(results | async)?.length === 0" class="ion-text-center ion-padding">
+      <ion-icon name="alert-circle-outline" color="warning" size="large"></ion-icon>
+      <ion-card-content>
+        <h2>No se encontraron resultados</h2>
+        <p>Por favor, intente con otros términos de búsqueda</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  
+</ion-content>

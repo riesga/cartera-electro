@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Acceder a la app</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="login-logo">
+    <img src="assets/Images/Logo411.png" alt="Electromuebles">
+  </div>
+  <form #loginForm="ngForm" novalidate>
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked" color="dark">Usuario</ion-label>
+        <ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off"
+          required>
+        </ion-input>
+      </ion-item>
+
+      <ion-text color="danger">
+        <p [hidden]="username.valid || submitted == false" class="ion-padding-start">
+          Usuario es requerido
+        </p>
+      </ion-text>
+
+      <ion-item>
+        <ion-label position="stacked" color="dark">Contraseña</ion-label>
+        <ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
+        </ion-input>
+      </ion-item>
+
+      <ion-text color="danger">
+        <p [hidden]="password.valid || submitted == false" class="ion-padding-start">
+          Contraseña es requerida
+        </p>
+      </ion-text>
+    </ion-list>
+
+    <ion-row>
+      <ion-col>
+        <ion-text color="danger">
+          <p *ngIf="error" class="ion-padding-start">
+            {{error}}
+          </p>
+        </ion-text>
+        <ion-button (click)="onLogin(loginForm)" type="submit" size="large" color="success"  expand="block">
+          <ion-icon name="bag-outline"></ion-icon> Ingresar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

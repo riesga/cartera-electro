@@ -1,0 +1,49 @@
+.inicio-logo {
+    padding: 20px 0;
+    min-height: 200px;
+    text-align: center;
+  }
+  
+  .inicio-logo img {
+    max-width: 250px;
+  }
+
+  .orientacion
+  { 
+    display: -webkit-box;
+    flex-wrap: wrap;
+     
+
+    /* 
+    display: inline-block;
+    flex-wrap: wrap;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);*/
+      
+  }
+  
+  .list {
+    margin-bottom: 0;
+  }
+
+  .inicio-textos
+  {
+    text-align: center;
+  }
+
+  .inicio-card
+  {
+    text-align: center;
+    width: 35%;
+    font-size: 9px;
+    background-color:rgb(171, 228, 171) ;
+  }
+
+  .inicio-card-content
+  {
+    text-align: center;
+    font-size: small;
+  }
+
+  

@@ -1,14 +1,9 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar>
+<ion-header [translucent]="true">
+  <ion-toolbar color="success">
     <ion-buttons slot="start">
-      <ion-back-button default-href="#"></ion-back-button>
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Configuración pantalla</ion-title>
-    <ion-buttons slot="end">
-      <ion-button color="dark">
-        <ion-icon slot="icon-only" ios="person-circle-outline" md="person-circle"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title>Inicio</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -36,9 +31,15 @@
   <ion-list-header>Brillo</ion-list-header>
   <ion-list [inset]="true">
     <ion-item>
-      <ion-range value="40">
-        <ion-icon name="sunny-outline" slot="start"></ion-icon>
-        <ion-icon name="sunny" slot="end"></ion-icon>
+      <ion-range 
+        [value]="brightnessValue" 
+        min="0" 
+        max="1" 
+        step="0.01" 
+        (ionChange)="onBrightnessChange($event)"
+        [disabled]="autoBrightnessEnabled">
+        <ion-icon slot="start" name="sunny-outline"></ion-icon>
+        <ion-icon slot="end" name="sunny"></ion-icon>
       </ion-range>
     </ion-item>
     <!-- <ion-item>

@@ -1,0 +1,63 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Inicio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="inicio-logo">
+    <img src="assets/Images/Logo411.png" alt="Electromuebles">
+  </div>
+  <ion-list lines="none">
+    <ion-item>
+      <ion-label text-wrap class="inicio-textos">
+        <h3>Bienvenido {{userName}} a la app de cobranzas de comercial Electromuebles Ltda. Todos los procesos internos
+          de cobranza en un solo lugar</h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-card>
+    <ion-segment scrollable>
+      <ion-segment-button value="Offline" [routerLink]="['/', 'ruta-sin-conexion']">
+        <ion-icon name="cloud-offline-outline"></ion-icon>
+        <ion-label>Ruta OffLine</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="Cobrorap" [routerLink]="['/', 'cobro-inmediato']">
+        <img src="assets/Images/advertencia.png" *ngIf="(resultCobros | async) != null && (resultCobros| async) != 0" style="position: absolute;bottom: 2em;left: 5em;">
+        <ion-icon name="cash-outline"></ion-icon>
+        <ion-label>Cobrar Ahora</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="Vistar" [routerLink]="['/', 'visitas-inmediatas']">
+        <img src="assets/Images/advertencia.png" *ngIf="(resultVisitas | async) != null && (resultVisitas | async) != 0" style="position: absolute;bottom: 2em;left: 5em;">
+        <ion-icon name="golf-outline"></ion-icon>
+        <ion-label>Visitar</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-card>
+
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button color="success">
+      <ion-icon md="caret-up" ios="chevron-up-circle-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button color="light">
+        <ion-icon name="logo-facebook"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light">
+        <ion-icon name="logo-twitter"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light">
+        <ion-icon name="logo-vimeo"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light">
+        <ion-icon name="logo-google"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>
