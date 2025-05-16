@@ -41,8 +41,6 @@ export class InicioPage implements OnInit {
      this.totales = this.servicios.searchTotalRutaCobros(this.UserService.getUserId());
      this.resultCobros = this.servicios.searchCobrosInmediatos(this.UserService.getUserId());
      this.resultVisitas = this.servicios.searchVisitarInmediatos(this.UserService.getUserId());
-     console.log("ete", this.resultCobros);
-     console.log(this.resultVisitas);
   }
 
 

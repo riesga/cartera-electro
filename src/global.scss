@@ -43,6 +43,10 @@ ion-item {
 }
 
 // Mejoras para modo oscuro y claro
-ion-title, .client-name, .client-id, .section-title, .info-row ion-label, .info-row ion-text, .payment-item ion-label {
-  color: var(--ion-text-color, #222) !important;
-}
+/* ion-title, .client-name, .client-id, .section-title, .info-row ion-label, .info-row ion-text, .payment-item ion-label {
+  color: var(--ion-text-color, #faf8f8) !important;
+  
+  .hc-theme & {
+    color: white !important;
+  }
+} */
