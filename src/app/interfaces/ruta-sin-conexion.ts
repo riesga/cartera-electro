@@ -7,5 +7,6 @@ export interface RutaSinConexion{
     telefono_cliente: number,
     saldo_credito:number,
     ValorCuota:number,
-    acuerdo:string
+    acuerdo:string,
+    documento_cliente: string // Agregando la propiedad faltante
 }

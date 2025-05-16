@@ -8,12 +8,8 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  },
-  {
     path: 'settings',
-    loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
+    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
   },
   {
     path: 'login',
@@ -46,6 +42,50 @@ const routes: Routes = [
   {
     path: 'detalle-recibo/:id/:product',
     loadChildren: () => import('./pages/detalle-recibo/detalle-recibo.module').then( m => m.DetalleReciboPageModule)
+  },
+  {
+    path: 'nuevo-abono/:id',
+    loadChildren: () => import('./pages/nuevo-abono/nuevo-abono.module').then( m => m.NuevoAbonoPageModule)
+  },
+  {
+    path: 'posponer/:id',
+    loadChildren: () => import('./pages/posponer/posponer.module').then( m => m.PosponerPageModule)
+  },
+  {
+    path: 'historal-gestiones/:id',
+    loadChildren: () => import('./pages/historal-gestiones/historal-gestiones.module').then( m => m.HistoralGestionesPageModule)
+  },
+  {
+    path: 'abonos-sin-conexion',
+    loadChildren: () => import('./pages/lista-abonos-sin-conexion/lista-abonos-sin-conexion.module').then( m => m.ListaAbonosSinConexionPageModule)
+  },
+  {
+    path: 'rutacobro',
+    loadChildren: () => import('./pages/rutacobro/rutacobro.module').then( m => m.RutacobroPageModule)
+  },
+  {
+    path: 'abono-sin-conexion/:id',
+    loadChildren: () => import('./pages/abono-sin-conexion/abono-sin-conexion.module').then( m => m.AbonoSinConexionPageModule)
+  },
+  {
+    path: 'ruta-sin-conexion',
+    loadChildren: () => import('./pages/ruta-sin-conexion/ruta-sin-conexion.module').then( m => m.RutaSinConexionPageModule)
+  },
+  {
+    path: 'recibo-temporal/:id',
+    loadChildren: () => import('./pages/recibo-temporal/recibo-temporal.module').then( m => m.ReciboTemporalPageModule)
+  },
+  {
+    path: 'relacion-cobros',
+    loadChildren: () => import('./pages/relacion-cobros/relacion-cobros.module').then( m => m.RelacionCobrosPageModule)
+  },
+  {
+    path: 'cobro-inmediato',
+    loadChildren: () => import('./pages/cobro-inmediato/cobro-inmediato.module').then( m => m.CobroInmediatoPageModule)
+  },
+  {
+    path: 'visitas-inmediatas',
+    loadChildren: () => import('./pages/visitas-inmediatas/visitas-inmediatas.module').then( m => m.VisitasInmediatasPageModule)
   },
 ];
 

@@ -16,9 +16,8 @@ export class AppComponent implements OnInit {
   public appPages = [
     { title: 'Inicio', url: '/inicio', icon: 'home' },
     { title: 'Clientes', url: '/clientes', icon: 'people' },
-    { title: 'Créditos', url: '/creditos', icon: 'bar-chart' },
-    { title: 'Abonos sin conexión', url: '/abonos-sin-conexion', icon: 'receipt' },
     { title: 'Ruta de Cobros', url: '/rutacobro', icon: 'navigate' },
+    { title: 'Abonos sin conexión', url: '/abonos-sin-conexion', icon: 'receipt' },    
     { title: 'Cobros realizados', url: '/relacion-cobros', icon: 'wallet' },
     { title: 'Configuración', url: '/settings', icon: 'settings' },
   ];

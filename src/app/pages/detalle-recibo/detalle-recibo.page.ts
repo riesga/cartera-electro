@@ -8,6 +8,8 @@ import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Browser } from '@capacitor/browser';
+import { NavController } from '@ionic/angular';
+import { ThemeService } from '../../services/theme.service';
 
 // Para dom-to-image, necesitamos una solución compatible
 declare const require: any;
@@ -29,6 +31,7 @@ export class DetalleReciboPage implements OnInit {
   infoRecibo: any;
   infoArticulos:any;
   today = new Date();
+  isDarkMode: boolean = false;
 
   constructor(
     private RutaActiva: ActivatedRoute,
@@ -37,9 +40,14 @@ export class DetalleReciboPage implements OnInit {
     private alertController: AlertController,
     private datePipe: DatePipe,
     private loadingCtrl: LoadingController,
-    private platform: Platform
-  ) { }
-
+    private platform: Platform,
+    public navController: NavController,
+    private themeService: ThemeService
+  ) { 
+    this.themeService.darkMode$.subscribe((isDark) => {
+      this.isDarkMode = isDark;
+    });
+  }
   ngOnInit(): void {
     this.RutaActiva.paramMap.subscribe(params => {
       if (params.has('id')) {
@@ -750,5 +758,13 @@ export class DetalleReciboPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  volver() {
+    this.navController.back();
+  }
+
+  async toggleDarkMode() {
+    await this.themeService.setDarkMode(!this.isDarkMode);
   }
 }

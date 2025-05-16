@@ -7,4 +7,6 @@ export interface Abono{
     numero_autorizacion: number,
     id_banco: number,
     numero_cheque: number,
+    latitud: number,
+    longitud: number,
 }

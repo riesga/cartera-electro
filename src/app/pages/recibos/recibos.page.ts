@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ClientesService } from './../../services/clientes.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-
+import { NavController } from '@ionic/angular';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-recibos',
@@ -14,13 +15,31 @@ export class RecibosPage implements OnInit {
 
   results: Observable<any> | undefined;
   codigo = "";
+  isDarkMode: boolean = false;
 
-  constructor(private activatedRoute: ActivatedRoute, private clientesService: ClientesService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute, 
+    private clientesService: ClientesService, 
+    public navController: NavController,
+    private themeService: ThemeService
+  ) { 
+    this.themeService.darkMode$.subscribe((isDark) => {
+      this.isDarkMode = isDark;
+    });
+  }
 
   ngOnInit() {
     this.codigo = this.activatedRoute.snapshot.paramMap.get('id') || "";
     this.results = this.clientesService.searchRecibos(this.codigo);
 
+  }
+
+  volver() {
+    this.navController.back();
+  }
+
+  async toggleDarkMode() {
+    await this.themeService.setDarkMode(!this.isDarkMode);
   }
 
 }

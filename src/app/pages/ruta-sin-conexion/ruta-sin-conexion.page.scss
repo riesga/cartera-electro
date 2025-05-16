@@ -1,0 +1,29 @@
+ion-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px 0;
+}
+
+ion-badge {
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+ion-label h3 {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+ion-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+ion-item-sliding {
+  margin-bottom: 16px;
+}

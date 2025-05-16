@@ -2,5 +2,6 @@ export interface Posponer{
     codigo: number,
     id_usuario: number,
     Fecha: Date,
-    Observacion: string
+    Observacion: string,
+    Comentario: string,
 }

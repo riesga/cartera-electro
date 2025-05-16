@@ -1,0 +1,23 @@
+ion-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+ion-card-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.empty-state-card {
+  margin-top: 60px;
+  padding: 20px;
+}
+
+.empty-state-icon {
+  font-size: 60px;
+  margin-bottom: 16px;
+}
+
+ion-card-content p {
+  margin-bottom: 12px;
+  line-height: 1.5;
+}

@@ -1,0 +1,108 @@
+<ion-header style="margin-top: 40px;">
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Comprobante de Pago</ion-title>
+    <ion-button slot="end" size="small" [color]="isDarkMode ? 'medium' : 'light'" shape="round" (click)="toggleDarkMode()" class="ion-margin-end">
+      <ion-icon [name]="isDarkMode ? 'moon' : 'sunny'" slot="icon-only"></ion-icon>
+    </ion-button>
+    <ion-button slot="end" size="small" [color]="isDarkMode ? 'medium' : 'light'" shape="round" [routerLink]="['/abonos-sin-conexion']" class="ion-margin-end">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      Volver
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div id="print-section">
+    <ion-card class="receipt-card">
+      <div class="receipt-header">
+        <img src="assets/Images/logoElectro.png" alt="Logo" class="receipt-logo">
+        <h1 class="company-name">COMERCIAL ELECTROMUEBLES</h1>
+        <div class="company-info">
+          <p>NIT: 800186618</p>
+          <p>https://electromuebles.com.co</p>
+          <p>Tels: 6078854526 - 6078853277</p>
+          <div class="receipt-title">COMPROBANTE DE PAGO</div>
+        </div>
+      </div>
+      
+      <div class="receipt-divider"></div>
+      
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <div class="receipt-data">
+                <p class="receipt-field">
+                  <span class="field-label">Recibo Temporal:</span>
+                  <span class="field-value">{{abono.rec_menbrete}}</span>
+                </p>
+                <p class="receipt-field">
+                  <span class="field-label">Cliente:</span>
+                  <span class="field-value">{{this.nombre_cliente}}</span>
+                </p>
+                <p class="receipt-field">
+                  <span class="field-label">Fecha de Pago:</span>
+                  <span class="field-value">{{abono.fecha_pago | date:'mediumDate'}}</span>
+                </p>
+                <p class="receipt-field highlight">
+                  <span class="field-label">Valor Pagado:</span>
+                  <span class="field-value bold">{{abono.valor | currency }}</span>
+                </p>
+                <p class="receipt-field">
+                  <span class="field-label">Saldo Crédito:</span>
+                  <span class="field-value">{{this.saldo_credito | currency }}</span>
+                </p>
+                <p class="receipt-field">
+                  <span class="field-label">Por concepto de:</span>
+                  <span class="field-value">Abono Crédito # {{abono.codigo_credito}}</span>
+                </p>
+                <p class="receipt-field">
+                  <span class="field-label">Generado por:</span>
+                  <span class="field-value">{{userName}}</span>
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        
+        <div class="receipt-footer ion-text-center">
+          <p class="thank-you">¡GRACIAS POR SU PAGO!</p>
+          <p class="receipt-note">Este es un comprobante temporal. Se generará un recibo oficial cuando se sincronice.</p>
+          <p class="receipt-note">* * * * * * * * * * * * * * * *</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+
+<!-- Botones de acción flotantes para móviles -->
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button color="success">
+    <ion-icon name="share-social-outline"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="top">
+    <ion-fab-button color="light" (click)="printReceipt()">
+      <ion-icon name="print-outline" color="dark"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="light" (click)="shareWhatsApp()">
+      <ion-icon name="logo-whatsapp" color="success"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>     
+        <ion-col size="3">
+          <ion-button  size="default" color="danger" (click)="alertConfirmar()">
+            <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>     
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,98 @@
+<ion-header style="margin-top: 40px;">
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Abonos sin conexión</ion-title>
+    <ion-button slot="end" size="small" color="light" shape="round" (click)="toggleDarkMode()" class="ion-margin-end">
+      <ion-icon [name]="isDarkMode ? 'moon' : 'sunny'" slot="icon-only"></ion-icon>
+    </ion-button>
+    <ion-button slot="end" size="small" color="light" shape="round" (click)="volver()" class="ion-margin-end">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      Volver
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Título de sección -->
+  <div class="ion-margin-bottom">
+    <h4 class="ion-padding-start">
+      <ion-icon name="cloud-offline-outline" color="primary"></ion-icon>
+      Abonos pendientes de sincronización
+    </h4>
+  </div>
+
+  <!-- Lista de abonos sin conexión -->
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of results">
+      <ion-item lines="none" button [routerLink]="['/recibo-temporal', item.rec_menbrete]" detail="true">
+        <ion-card class="ion-no-margin" style="width: 100%;">
+          <ion-card-header color="light">
+            <ion-card-subtitle>
+              <ion-badge color="primary">
+                <ion-icon name="code-outline" slot="start"></ion-icon>
+                Código: {{ item.codigo_credito }}
+              </ion-badge>
+            </ion-card-subtitle>
+          </ion-card-header>
+          
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-icon name="cash-outline" color="success" class="ion-margin-end"></ion-icon>
+                  <strong>Valor:</strong>
+                  <div class="amount">{{ item.valor | currency }}</div>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-icon name="calendar-outline" color="tertiary" class="ion-margin-end"></ion-icon>
+                  <strong>Fecha:</strong>
+                  <div>{{ item.fecha_pago | date:'short' }}</div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+      
+      <ion-item-options side="end">
+        <ion-item-option color="primary" [routerLink]="['/recibo-temporal', item.rec_menbrete]">
+          <ion-icon slot="icon-only" name="document-text-outline"></ion-icon>
+          Ver Recibo
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  
+  <!-- Estado vacío -->
+  <ion-card *ngIf="!results || results.length === 0" class="ion-margin-top">
+    <ion-card-content class="ion-text-center ion-padding">
+      <ion-icon name="cloud-offline-outline" color="warning" style="font-size: 64px;"></ion-icon>
+      <h2>No hay abonos pendientes</h2>
+      <p>No se han creado abonos sin conexión.</p>
+      <ion-button expand="block" color="secondary" class="ion-margin-top" [routerLink]="['/ruta-sin-conexion']">
+        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+        Ir a Ruta Offline
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-tabs>
+      <ion-tab-bar>
+        <ion-tab-button (click)="almacenarabonosSinconexion()">
+          <ion-icon name="cloud-upload-outline"></ion-icon>
+          <ion-label>Sincronizar pagos</ion-label>
+        </ion-tab-button>
+        
+        <ion-tab-button [routerLink]="['/ruta-sin-conexion']">
+          <ion-icon name="cloud-offline-outline"></ion-icon>
+          <ion-label>Ruta Offline</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-footer>

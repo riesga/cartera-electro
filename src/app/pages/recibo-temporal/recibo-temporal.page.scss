@@ -1,0 +1,186 @@
+.center-item {
+    align-items: center;
+   }
+
+/* Estilos para el recibo */
+.receipt-container {
+  display: flex;
+  justify-content: center;
+  padding: 0 10px;
+}
+
+.receipt-card {
+  max-width: 800px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden; /* Importante para contener la marca de agua */
+}
+
+/* Asegurarse de que todo el contenido esté por encima de la marca de agua */
+.receipt-header, .receipt-section, .receipt-footer, .receipt-divider {
+  position: relative;
+  z-index: 1;
+}
+
+.receipt-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.receipt-logo {
+  max-width: 80%;
+  margin-bottom: 0.5rem;
+}
+
+.company-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+  color: #333;
+}
+
+.company-info {
+  font-size: 0.9rem;
+  color: black;
+}
+
+.company-info p {
+  margin: 0.1rem 0;
+}
+
+.receipt-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  border-top: 1px dashed #ccc;
+  padding-top: 0.5rem;
+}
+
+.receipt-divider {
+  border-bottom: 1px dashed #ccc;
+  margin: 1rem 0;
+}
+
+.receipt-section {
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  color: black;
+}
+
+.section-title ion-icon {
+  margin-right: 0.5rem;
+}
+
+.receipt-row {
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.3rem;
+}
+
+.receipt-label {
+  font-weight: 500;
+  color: #333;
+}
+
+.receipt-value {
+  text-align: right;
+  color: black;
+}
+
+.highlight {
+  background-color: #f0f8ff;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin: 0.5rem 0;
+}
+
+.products-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.products-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.3rem;
+  color: black;
+}
+
+.products-list ion-icon {
+  margin-right: 0.5rem;
+  color: #10dc60;
+}
+
+.payment-details {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 0.8rem;
+}
+
+.payment-method {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #eee;
+}
+
+.receipt-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px dashed #ccc;
+}
+
+.thank-you {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #10dc60;
+}
+
+.footer-date {
+  color: black;
+  margin-top: 0.5rem;
+}
+
+/* Estilos específicos para impresión */
+@media print {
+  ion-header,
+  ion-fab,
+  ion-footer {
+    display: none !important;
+  }
+  
+  .receipt-container {
+    padding: 0;
+  }
+  
+  .receipt-card {
+    box-shadow: none;
+    border: none;
+  }
+  
+  .receipt-card::before {
+    opacity: 0.06; /* Ligeramente más sutil en la impresión */
+  }
+  
+  body, ion-content {
+    background-color: white !important;
+  }
+
+  .thank-you {
+    color: black;
+  }
+}

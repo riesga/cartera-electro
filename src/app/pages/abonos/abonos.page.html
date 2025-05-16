@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header style="margin-top: 40px;">
   <ion-toolbar color="success">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
@@ -6,6 +6,13 @@
     <ion-title>
       Crédito: {{codigo}}
     </ion-title>
+    <ion-button slot="end" size="small" color="light" shape="round" (click)="toggleDarkMode()" class="ion-margin-end">
+      <ion-icon [name]="isDarkMode ? 'moon' : 'sunny'" slot="icon-only"></ion-icon>
+    </ion-button>
+    <ion-button slot="end"  size="small" color="light" shape="round" (click)="volver()" class="ion-margin-end">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      Volver
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -129,9 +136,9 @@
     <ion-label>Gestión</ion-label>
   </ion-tab-button>
 
-  <ion-tab-button [routerLink]="['/', 'rutacobro']">
-    <ion-icon name="arrow-undo"></ion-icon>
-    <ion-label>Finalizar</ion-label>
+  <ion-tab-button [routerLink]="['/', 'clientes']">
+    <ion-icon name="search-outline"></ion-icon>
+    <ion-label>Otro cliente</ion-label>
   </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>

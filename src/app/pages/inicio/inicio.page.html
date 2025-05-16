@@ -1,63 +1,139 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" style="margin-top: 40px;">
   <ion-toolbar color="success">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button color="light"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Inicio</ion-title>
+    <ion-title>
+      <img src="assets/Images/logoElectro.png" alt="Electromuebles" style="height: 38px; vertical-align: middle; margin-right: 10px;">      
+    </ion-title>
+    <ion-button slot="end" size="small" color="light" shape="round" (click)="toggleDarkMode()" class="ion-margin-end">
+      <ion-icon [name]="isDarkMode ? 'moon' : 'sunny'" slot="icon-only"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="inicio-logo">
-    <img src="assets/Images/Logo411.png" alt="Electromuebles">
+<ion-content class="ion-padding">
+  <!-- Logo y cabecera -->
+  <div class="welcome-container">
+    
+    <ion-card class="welcome-card">
+      <ion-card-content class="ion-text-center">
+        <ion-icon name="person-circle-outline" color="success" size="large"></ion-icon>
+        <h2 class="welcome-title">Bienvenido, {{userName}}!</h2>
+        <p class="welcome-subtitle">App de Cobranzas de Comercial Electromuebles Ltda.</p>
+      </ion-card-content>
+    </ion-card>
   </div>
-  <ion-list lines="none">
-    <ion-item>
-      <ion-label text-wrap class="inicio-textos">
-        <h3>Bienvenido {{userName}} a la app de cobranzas de comercial Electromuebles Ltda. Todos los procesos internos
-          de cobranza en un solo lugar</h3>
-      </ion-label>
-    </ion-item>
-  </ion-list>
 
-  <ion-card>
-    <ion-segment scrollable>
-      <ion-segment-button value="Offline" [routerLink]="['/', 'ruta-sin-conexion']">
-        <ion-icon name="cloud-offline-outline"></ion-icon>
-        <ion-label>Ruta OffLine</ion-label>
-      </ion-segment-button>
+  <!-- Acciones principales -->
+  <div class="main-actions">
+    <h3 class="section-title">
+      <ion-icon name="flash-outline" color="success"></ion-icon>
+      Acciones Rápidas
+    </h3>
+    
+    <div class="actions-grid">
+      <!-- Ruta Offline -->
+      <ion-card class="action-card" [routerLink]="['/', 'ruta-sin-conexion']">
+        <ion-ripple-effect></ion-ripple-effect>
+        <div class="card-icon-container offline">
+          <ion-icon name="cloud-offline-outline"></ion-icon>
+        </div>
+        <ion-card-content>
+          <h3>Ruta Offline</h3>
+          <p>Gestiona cobros sin conexión</p>
+        </ion-card-content>
+      </ion-card>
 
-      <ion-segment-button value="Cobrorap" [routerLink]="['/', 'cobro-inmediato']">
-        <img src="assets/Images/advertencia.png" *ngIf="(resultCobros | async) != null && (resultCobros| async) != 0" style="position: absolute;bottom: 2em;left: 5em;">
-        <ion-icon name="cash-outline"></ion-icon>
-        <ion-label>Cobrar Ahora</ion-label>
-      </ion-segment-button>
+      <!-- Cobrar Ahora -->
+      <ion-card class="action-card" [routerLink]="['/', 'cobro-inmediato']">
+        <ion-ripple-effect></ion-ripple-effect>
+        <div class="notification-badge" *ngIf="(resultCobros | async) != null && (resultCobros| async) != 0">
+          <ion-badge color="danger">{{ resultCobros | async }}</ion-badge>
+        </div>
+        <div class="card-icon-container cobrar">
+          <ion-icon name="cash-outline"></ion-icon>
+        </div>
+        <ion-card-content>
+          <h3>Cobrar Ahora</h3>
+          <p>Registra pagos inmediatos</p>
+        </ion-card-content>
+      </ion-card>
 
-      <ion-segment-button value="Vistar" [routerLink]="['/', 'visitas-inmediatas']">
-        <img src="assets/Images/advertencia.png" *ngIf="(resultVisitas | async) != null && (resultVisitas | async) != 0" style="position: absolute;bottom: 2em;left: 5em;">
-        <ion-icon name="golf-outline"></ion-icon>
-        <ion-label>Visitar</ion-label>
-      </ion-segment-button>
-    </ion-segment>
+      <!-- Visitar -->
+      <ion-card class="action-card" [routerLink]="['/', 'visitas-inmediatas']">
+        <ion-ripple-effect></ion-ripple-effect>
+        <div class="notification-badge" *ngIf="(resultVisitas | async) != null && (resultVisitas | async) != 0">
+          <ion-badge color="danger">{{ resultVisitas | async }}</ion-badge>
+        </div>
+        <div class="card-icon-container visitar">
+          <ion-icon name="navigate-outline"></ion-icon>
+        </div>
+        <ion-card-content>
+          <h3>Visitar</h3>
+          <p>Registra visitas a clientes</p>
+        </ion-card-content>
+      </ion-card>
+      
+      <!-- Reportes -->
+      <ion-card class="action-card" [routerLink]="['/', 'relacion-cobros']">
+        <ion-ripple-effect></ion-ripple-effect>
+        <div class="card-icon-container reporte">
+          <ion-icon name="stats-chart-outline"></ion-icon>
+        </div>
+        <ion-card-content>
+          <h3>Reportes</h3>
+          <p>Resumen de actividades</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+  
+  <!-- Métricas y resumen -->
+  <ion-card class="summary-card">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="pulse-outline" color="success"></ion-icon>
+        Métricas de Hoy
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <div class="metric-item">
+              <ion-icon name="cash-outline" color="success"></ion-icon>
+              <div class="metric-value">{{ (resultCobros | async) || 0 }}</div>
+              <div class="metric-label">Cobros Pendientes</div>
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div class="metric-item">
+              <ion-icon name="navigate-outline" color="tertiary"></ion-icon>
+              <div class="metric-value">{{ (resultVisitas | async) || 0 }}</div>
+              <div class="metric-label">Visitas Pendientes</div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
   </ion-card>
-
-  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-    <ion-fab-button color="success">
-      <ion-icon md="caret-up" ios="chevron-up-circle-outline"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button color="light">
-        <ion-icon name="logo-facebook"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="light">
-        <ion-icon name="logo-twitter"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="light">
-        <ion-icon name="logo-vimeo"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="light">
-        <ion-icon name="logo-google"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
 </ion-content>
+
+<!-- Botón de ayuda -->
+<ion-fab horizontal="end" vertical="bottom" slot="fixed">
+  <ion-fab-button color="success">
+    <ion-icon name="help-outline"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="top">
+    <ion-fab-button color="light" (click)="openContacto()">
+      <ion-icon name="call-outline" color="success"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="light" (click)="openWhatsapp()">
+      <ion-icon name="logo-whatsapp" color="success"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="light" href="https://electromuebles.com.co" target="_blank">
+      <ion-icon name="globe-outline" color="primary"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>

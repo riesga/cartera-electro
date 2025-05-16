@@ -1,0 +1,146 @@
+<ion-header style="margin-top: 40px;">
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Proceso de pago</ion-title>
+    <ion-button slot="end" size="small" color="light" shape="round" (click)="toggleDarkMode()" class="ion-margin-end">
+      <ion-icon [name]="isDarkMode ? 'moon' : 'sunny'" slot="icon-only"></ion-icon>
+    </ion-button>
+    <ion-button slot="end"  size="small" color="light" shape="round" (click)="volver()" class="ion-margin-end">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      Volver
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="registrationForm">
+    <!-- Información de la obligación -->
+    <ion-card class="obligation-card">
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">
+          <ion-text color="success">COD. OBLIGACIÓN: {{codigo}}</ion-text>
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content *ngFor="let item of (results | async)" class="client-info">
+        <div class="client-section">
+          <h2 class="client-name">{{ item.nombre_cliente }}</h2>
+          <p class="client-id">C.C o Nit: {{ item.nro_identificacion}}</p>
+        </div>
+        
+        <div class="credit-info">
+          <h3 class="section-title">INFORMACIÓN DEL CRÉDITO</h3>
+          <div class="info-row">
+            <ion-label>Valor Crédito:</ion-label>
+            <ion-text class="value">{{ item.valor | currency }}</ion-text>
+          </div>
+          <div class="info-row">
+            <ion-label>Saldo Crédito:</ion-label>
+            <ion-text color="danger" class="value">{{ item.saldo | currency }}</ion-text>
+          </div>
+          <div class="info-row">
+            <ion-label>Valor Cuota:</ion-label>
+            <ion-text color="primary" class="value">{{ item.saldoCuota | currency }}</ion-text>
+          </div>
+            <div class="info-row value-highlight">
+            <ion-label><strong>Valor digitado:</strong></ion-label>
+            <ion-text class="value">
+              <ion-chip *ngIf="valorCtrl?.value" color="primary">
+              <ion-icon name="cash-outline"></ion-icon>
+              <ion-label><strong>{{ valorCtrl?.value | currency }}</strong></ion-label>
+              </ion-chip>
+              <ion-text *ngIf="!valorCtrl?.value" color="medium">
+              <small>Pendiente por ingresar</small>
+              </ion-text>
+            </ion-text>
+            </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Productos Relacionados -->
+    <ion-card class="products-card">
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">
+          <ion-text color="success">Productos Relacionados</ion-text>
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <ion-list lines="full" *ngFor="let item of (product | async)" class="product-item">
+          <ion-icon name="checkmark-circle" color="success" slot="start"></ion-icon>
+          <ion-label text-wrap class="product-name">{{item.nombrearticulo}}</ion-label>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Formulario de pago -->
+    <ion-card class="payment-card">
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">
+          <ion-text color="success">Información de Pago</ion-text>
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>        
+        
+        <!-- Forma de pago -->
+        <ion-item class="payment-item">
+          <ion-label position="stacked">Forma de pago</ion-label>
+          <ion-select interface="action-sheet" ok-text="OK" cancel-text="Cancelar" formControlName="forma_abono" (ionChange)="onChange()">
+            <ion-select-option value="Efectivo">Efectivo</ion-select-option>
+            <ion-select-option value="Tarjeta de Credito">Tarjeta de Crédito</ion-select-option>
+            <ion-select-option value="Trasferencia">Transferencia</ion-select-option>
+            <ion-select-option value="Tarjeta debito">Tarjeta débito</ion-select-option>
+          </ion-select>
+        </ion-item>
+        
+        <!-- Tipo de tarjeta (condicional) -->
+        <ion-item *ngIf="ListaTarjetas" class="payment-item">
+          <ion-label position="stacked">Tipo de Tarjeta</ion-label>
+          <ion-select interface="action-sheet" ok-text="OK" cancel-text="Cancelar" formControlName="tipo_tarjeta" (ionChange)="onTarjetas()">
+            <ion-select-option *ngFor="let item of (Tarjetas| async)" value="{{ item.Nombre_Tipo }}">{{ item.Nombre_Tipo}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        
+        <!-- Bancos (condicional) -->
+        <ion-item *ngIf="ListaBancos" class="payment-item">
+          <ion-label position="stacked">Banco</ion-label>
+          <ion-select interface="action-sheet" ok-text="OK" cancel-text="Cancelar" formControlName="id_banco" (ionChange)="onBancos()">
+            <ion-select-option *ngFor="let item of (Bancos| async)" value="{{ item.id_banco }}">{{ item.nombre }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        
+        <!-- Número de autorización (condicional) -->
+        <ion-item *ngIf="CodComprobante" class="payment-item">
+          <ion-label position="stacked">Número de autorización</ion-label>
+          <ion-input type="number" formControlName="id_comprobante" (ionChange)="onComprobante()"></ion-input>
+        </ion-item>   
+        
+        
+
+        <!-- Valor a abonar -->
+        <ion-item class="payment-item">          
+          <ion-label position="stacked">Valor a abonar</ion-label>
+          <ion-input type="number" formControlName="valorCtrl" placeholder="Ingrese el valor"></ion-input>
+        </ion-item>
+        <div *ngIf="valorCtrl && valorCtrl.invalid && (valorCtrl.dirty || valorCtrl.touched)">
+          <div *ngFor="let validation of errorMessages.valorCtrl">
+            <div class="error-message" *ngIf="valorCtrl.hasError(validation.type)">
+              {{ validation.message }}
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    
+    <!-- Botón de Confirmar Pago -->    
+        <ion-button expand="block" color="success" (click)="registrarAbonoConUbicacion()" [disabled]="!registrationForm.valid" class="confirm-button">
+          <ion-icon slot="start" name="cash-outline"></ion-icon>
+            <ion-text class="ion-text-white">Confirmar Pago</ion-text>
+        </ion-button>
+
+  </form>
+</ion-content>

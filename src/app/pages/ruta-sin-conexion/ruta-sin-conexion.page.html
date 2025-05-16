@@ -1,0 +1,76 @@
+<ion-header [translucent]="true" style="margin-top: 40px;">
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Ruta sin conexión</ion-title>
+    <ion-button slot="end" size="small" color="light" shape="round" (click)="toggleDarkMode()" class="ion-margin-end">
+      <ion-icon [name]="isDarkMode ? 'moon' : 'sunny'" slot="icon-only"></ion-icon>
+    </ion-button>
+    <ion-button slot="end" size="small" color="light" shape="round" [routerLink]="['/', 'inicio']" class="ion-margin-end">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      Volver
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Encabezado con fecha de descarga -->
+  <ion-card *ngIf="results && results.length > 0" class="ion-margin-bottom">
+    <ion-card-header color="light">
+      <ion-card-title>
+        <ion-icon name="calendar-outline" color="primary" class="ion-margin-end"></ion-icon>
+        Ruta de Cobro sin conexión
+      </ion-card-title>
+      <ion-card-subtitle class="ion-margin-top">
+        <ion-badge color="tertiary">
+          <ion-icon name="time-outline" slot="start"></ion-icon>
+          Descargada: {{fechaRuta | date:'medium'}}
+        </ion-badge>
+      </ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+  <!-- Lista de clientes en la ruta -->
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of results">
+      <ion-item button [routerLink]="['/', 'abono-sin-conexion', item.codigo]" detail="true">
+        <ion-label>
+          <h2><strong><ion-icon name="person" color="primary" size="small"></ion-icon> {{ item.nombre_cliente }}</strong> - {{item.codigo}}</h2>
+          <p>
+            <ion-text color="medium">{{item.fecha_cobro | date:'dd/MM/yyyy'}}</ion-text> | 
+            <ion-text color="medium">Saldo: {{item.saldo_credito | currency}}</ion-text>
+          </p>
+          <p>
+            <ion-icon name="call-outline" size="small"></ion-icon> <ion-text [color]="isDarkMode ? 'dark' : 'medium '"> {{item.celular_cliente}} | </ion-text>
+            <ion-icon name="location-outline" size="small"></ion-icon> <ion-text [color]="isDarkMode ? 'dark' : 'primary'"> {{item.direccion_cliente}} </ion-text>
+          </p>
+        </ion-label>
+        <ion-badge slot="end" color="warning">{{item.ValorCuota | currency}}</ion-badge>
+      </ion-item>
+      
+      <ion-item-options side="end">
+        <ion-item-option color="success" [routerLink]="['/', 'abono-sin-conexion', item.codigo]">
+          <ion-icon slot="icon-only" name="cash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  
+  <!-- Mensaje cuando no hay datos -->
+  <ion-card *ngIf="!results || results.length === 0" class="ion-text-center ion-padding">
+    <ion-card-content>
+      <ion-icon name="cloud-offline-outline" color="warning" style="font-size: 64px;"></ion-icon>
+      <h2 class="ion-padding-top">No hay rutas disponibles</h2>
+      <p>No se ha descargado ninguna ruta de cobro para trabajar sin conexión.</p>
+      <ion-button expand="block" size="large" color="secondary" class="ion-margin-top" [routerLink]="['/', 'rutacobro']">
+        <ion-icon name="cloud-download-outline" slot="start"></ion-icon>
+        Descargar Ruta
+      </ion-button>
+      <ion-button expand="block" color="light" class="ion-margin-top" [routerLink]="['/', 'inicio']">
+        <ion-icon name="home-outline" slot="start"></ion-icon>
+        Regresar al Inicio
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,228 @@
+.my-custom-class {
+    --background: #e5e5e5;
+}
+.basic-alert {
+    --backdrop-opacity: 0.6;
+    --background: linear-gradient(90deg, rgb(30, 0, 201) 1%, rgb(248, 255, 248) 100%);
+    .alert-title.sc-ion-alert-md, .alert-title.sc-ion-alert-ios {
+        font-size: 16;
+        color: yellow;
+    }   
+    .alert-message.sc-ion-alert-md, .alert-message.sc-ion-alert-ios {
+        color: yellow;
+    }
+    .alert-button.sc-ion-alert-md, .alert-button.sc-ion-alert-ios {
+        color: yellow;
+        background-color: red;
+        width: 100px;
+        border-radius: 2px;
+    }
+}
+
+// Mejoras para modo oscuro y claro
+ion-title, .client-name, .client-id, .section-title, .info-row ion-label, .info-row ion-text, .payment-item ion-label {
+  color: var(--ion-text-color, #222) !important;
+}
+
+ion-content {
+  --background: var(--ion-background-color, #fff);
+}
+
+ion-card, .payment-card, .obligation-card {
+  background: var(--ion-card-background, var(--ion-background-color, #fff));
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  border-radius: 16px;
+}
+
+ion-card-title, ion-card-header, ion-card-content {
+  color: var(--ion-text-color, #222) !important;
+}
+
+ion-button.confirm-button {
+  --background: var(--ion-color-success);
+  --color: #fff;
+  --border-radius: 8px;
+  font-weight: 600;
+  height: 48px;
+  margin-top: 24px;
+}
+
+.error-message {
+  color: var(--ion-color-danger, #eb445a);
+  font-size: 0.85rem;
+  margin: 5px 0 10px 0;
+  padding-left: 16px;
+}
+
+.logo-electro-header {
+  height: 36px;
+  vertical-align: middle;
+  margin-right: 8px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.08));
+  background: transparent;
+  border-radius: 12px;
+}
+
+// Ajustes para modo oscuro
+body.dark ion-title, body.dark .client-name, body.dark .client-id, body.dark .section-title, body.dark .info-row ion-label, body.dark .info-row ion-text, body.dark .payment-item ion-label {
+  color: var(--ion-text-color, #fff) !important;
+}
+
+body.dark ion-content {
+  --background: var(--ion-background-color, #222428);
+}
+
+body.dark ion-card, body.dark .payment-card, body.dark .obligation-card {
+  background: var(--ion-card-background, #222428);
+  color: var(--ion-text-color, #fff);
+}
+
+body.dark ion-card-title, body.dark ion-card-header, body.dark ion-card-content {
+  color: var(--ion-text-color, #fff) !important;
+}
+
+// Responsive
+@media (max-width: 600px) {
+  ion-card {
+    width: 98%;
+    font-size: 12px;
+  }
+  .logo-electro-header {
+    max-width: 90vw;
+    height: 28px;
+  }
+}
+
+/* Estilos para las tarjetas */
+ion-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+ion-card:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.obligation-card, .payment-card {
+    overflow: visible;
+}
+
+ion-card-header {
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #eaeaea;
+}
+
+ion-card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+/* Estilos para la información del cliente */
+.client-info {
+    padding: 12px;
+}
+
+.client-section {
+    margin-bottom: 16px;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 12px;
+}
+
+.client-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 6px 0;
+    color: #333;
+}
+
+.client-id {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+}
+
+/* Estilos para la información del crédito */
+.credit-info {
+    padding: 8px 0;
+}
+
+.section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 12px 0;
+    color: #444;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-row ion-label {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.value {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Estilos para los elementos del formulario de pago */
+.payment-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    margin-bottom: 12px;
+}
+
+ion-item {
+    --background: transparent;
+    --border-color: #ddd;
+    --highlight-height: 1px;
+    --highlight-color-focused: var(--ion-color-success);
+}
+
+ion-select {
+    width: 100%;
+    max-width: 100%;
+}
+
+ion-input {
+    --padding-start: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-top: 4px;
+}
+
+/* Estilos para el botón de confirmar */
+.confirm-button {
+    margin-top: 24px;
+    --border-radius: 8px;
+    font-weight: 600;
+    height: 48px;
+}
+
+/* Estilos para dispositivos más pequeños */
+@media (max-width: 360px) {
+    ion-card-title {
+        font-size: 1.1rem;
+    }
+    
+    .client-name {
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 0.9rem;
+    }
+}
+

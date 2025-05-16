@@ -1,8 +1,9 @@
 import { ClientesService, SearchType } from './../../services/clientes.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ToastController } from '@ionic/angular';
+import { ToastController, NavController } from '@ionic/angular';
 import { first } from 'rxjs/operators';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-clientes',
@@ -16,10 +17,18 @@ export class ClientesPage implements OnInit {
   searchTerm: string = '';
   type: SearchType = SearchType.nro_identificacion;
 
+  isDarkMode: boolean = false;
+
   constructor(
     private clientesService: ClientesService,
-    private toastController: ToastController
-  ) { }
+    private toastController: ToastController,
+    public navController: NavController,
+    private themeService: ThemeService
+  ) { 
+    this.themeService.darkMode$.subscribe((isDark) => {
+      this.isDarkMode = isDark;
+    });
+  }
 
   ngOnInit() {
   }
@@ -54,5 +63,13 @@ export class ClientesPage implements OnInit {
         toast.dismiss();
       }
     });
+  }
+
+  volver() {
+    this.navController.back();
+  }
+
+  async toggleDarkMode() {
+    await this.themeService.setDarkMode(!this.isDarkMode);
   }
 }

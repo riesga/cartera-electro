@@ -41,3 +41,8 @@
 ion-item {
     --transition: none;
 }
+
+// Mejoras para modo oscuro y claro
+ion-title, .client-name, .client-id, .section-title, .info-row ion-label, .info-row ion-text, .payment-item ion-label {
+  color: var(--ion-text-color, #222) !important;
+}

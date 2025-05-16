@@ -1,0 +1,96 @@
+<ion-header style="margin-top: 40px;">
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Cobros Realizados
+    </ion-title>
+    <ion-button slot="end" size="small" color="light" shape="round" (click)="toggleDarkMode()" class="ion-margin-end">
+      <ion-icon [name]="isDarkMode ? 'moon' : 'sunny'" slot="icon-only"></ion-icon>
+    </ion-button>
+    <ion-button slot="end" size="small" color="light" shape="round" [routerLink]="['/inicio']" class="ion-margin-end">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      Volver
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div id="print-section" class="receipt-card">
+    <!-- Tarjeta de resumen -->
+    <ion-card class="summary-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="calendar-outline" color="primary"></ion-icon>
+          Resumen de Cobros
+        </ion-card-title>
+        <ion-card-subtitle>{{ this.fechaCobros }}</ion-card-subtitle>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <div *ngFor="let list of (resultsCobros | async)" class="total-amount">
+          <ion-text color="dark">
+            <h2>Total Cobros Realizados</h2>
+            <div class="amount">{{ list.valor | currency }}</div>
+          </ion-text>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    
+    <!-- Lista de cobros -->
+    <ion-card class="data-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="list-outline" color="primary"></ion-icon>
+          Detalle de Cobros
+        </ion-card-title>
+      </ion-card-header>
+      
+      <div class="table-container">
+        <table class="cobros-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Código</th>
+              <th>Recibo</th>
+              <th>Hora</th>
+              <th>Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of (results | async)">
+              <td>{{ item.item }}</td>
+              <td>{{ item.codigo }}</td>
+              <td>{{ item.recibo }}</td>
+              <td>{{ item.Hora }}</td>
+              <td class="amount-cell">{{ item.valor | currency }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Mensaje cuando no hay cobros -->
+      <ion-card-content *ngIf="emptyResults$ | async" class="empty-state">
+        <ion-icon name="alert-circle-outline" color="warning" size="large"></ion-icon>
+        <h3>No se han registrado abonos</h3>
+        <p>No hay cobros registrados para el día de hoy.</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+
+<!-- Botones de acción flotantes para móviles -->
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button color="success">
+    <ion-icon name="share-social-outline"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="top">
+    <ion-fab-button color="light" (click)="printReceipt()">
+      <ion-icon name="print-outline" color="dark"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="light" (click)="shareWhatsApp()">
+      <ion-icon name="logo-whatsapp" color="success"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
