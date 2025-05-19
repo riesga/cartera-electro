@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
 import { Abono } from '../interfaces/abono';
 import { AbonoSinConexion } from '../interfaces/abono-sin-conexion';
 import { Posponer } from '../interfaces/Posponer';
+import { OrdenarRuta } from '../interfaces/ordernar-ruta';
 
 export enum SearchType {
   nro_identificacion = 'nro_identificacion',
@@ -150,4 +151,38 @@ export class ClientesService {
     return this.http.get(`${environment.apiUrl}ListarObservacionesCredito?codigo=${codigo}`, this.httpOptions)
     .pipe(catchError(this.handleError()));
   }
+
+
+  updateRutaCobroOrder(orderData: OrdenarRuta[]): Observable<any> {
+    const data = { items: orderData };
+    return this.http.post(`${environment.apiUrl}actualizar-orden`, data, this.httpOptions);
+  }
+
+ 
+ /*  updateRutaCobroOrder(orderData: any[], userId: any): Observable<any> {
+    const url = `${this.url}/rutas/actualizar-orden`;
+    
+    // Crear el objeto de datos para enviar al servidor
+    const data = {
+      id_usuario: userId,
+      items: orderData
+    };
+    
+    // Configurar headers si es necesario
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`
+    });
+    
+    // Realizar la petición POST
+    return this.http.post(url, data, { headers }).pipe(
+      tap(response => {
+        console.log('Orden actualizado correctamente', response);
+      }),
+      catchError(error => {
+        console.error('Error al actualizar el orden de la ruta', error);
+        return throwError(() => new Error('No se pudo actualizar el orden de la ruta. Por favor intente nuevamente.'));
+      })
+    );
+  } */
 }

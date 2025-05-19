@@ -49,7 +49,7 @@
       <ion-card class="action-card" [routerLink]="['/', 'cobro-inmediato']">
         <ion-ripple-effect></ion-ripple-effect>
         <div class="notification-badge" *ngIf="(resultCobros | async) != null && (resultCobros| async) != 0">
-          <ion-badge color="danger">{{ resultCobros | async }}</ion-badge>
+          <ion-badge color="danger">{{ cobrosCount }}</ion-badge>
         </div>
         <div class="card-icon-container cobrar">
           <ion-icon name="cash-outline"></ion-icon>
@@ -64,7 +64,7 @@
       <ion-card class="action-card" [routerLink]="['/', 'visitas-inmediatas']">
         <ion-ripple-effect></ion-ripple-effect>
         <div class="notification-badge" *ngIf="(resultVisitas | async) != null && (resultVisitas | async) != 0">
-          <ion-badge color="danger">{{ resultVisitas | async }}</ion-badge>
+          <ion-badge color="danger">{{ visitasCount }}</ion-badge>
         </div>
         <div class="card-icon-container visitar">
           <ion-icon name="navigate-outline"></ion-icon>
@@ -94,7 +94,7 @@
     <ion-card-header>
       <ion-card-title>
         <ion-icon name="pulse-outline" color="success"></ion-icon>
-        Métricas de Hoy
+        Pendientes de hoy
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
@@ -103,14 +103,14 @@
           <ion-col size="6">
             <div class="metric-item">
               <ion-icon name="cash-outline" color="success"></ion-icon>
-              <div class="metric-value">{{ (resultCobros | async) || 0 }}</div>
+              <div class="metric-value">{{ cobrosCount }}</div>
               <div class="metric-label">Cobros Pendientes</div>
             </div>
           </ion-col>
           <ion-col size="6">
             <div class="metric-item">
               <ion-icon name="navigate-outline" color="tertiary"></ion-icon>
-              <div class="metric-value">{{ (resultVisitas | async) || 0 }}</div>
+              <div class="metric-value">{{ visitasCount }}</div>
               <div class="metric-label">Visitas Pendientes</div>
             </div>
           </ion-col>

@@ -686,9 +686,9 @@ export class DetalleReciboPage implements OnInit {
 
     <h3><center>NIT: 800186618</center></h3>
     <p><center>https://www.electromuebles.com.co/<br>
-    Tels: Sede principal Arauca: 8853277<br>
-    Tame: 3003517555 Arauq: 8835940 <br>
-    Saravena: 8820763 </center></p>
+    Tels: Sede principal Arauca: 6078853277<br>
+    Tame: 3003517555 Arauq: 6078835940 <br>
+    Saravena: 6078820763 </center></p>
     <h3><center>COMPROBANTE DE PAGO</center></h3>
     ${this.reciboToString()}`;
   }

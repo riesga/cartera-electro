@@ -27,86 +27,55 @@
   </div>
   
   <!-- Lista de visitas -->
-  <ion-list lines="none">
-    <ion-item-sliding *ngFor="let item of (results | async)">
-      <ion-item lines="none" button [routerLink]="['/', 'abonos', item.codigo]" detail="true">
-        <ion-card class="visita-card ion-no-margin">
-          <ion-card-header class="visita-card-header">
-            <ion-badge color="tertiary" class="codigo-badge">
-              Crédito: {{ item.codigo }}
-            </ion-badge>
-            <h2 class="client-name">{{ item.nombre_cliente }}</h2>
-          </ion-card-header>
-          
-          <ion-card-content>
-            <ion-grid class="info-grid">
-              <ion-row>
-                <ion-col size="12" size-md="6">
-                  <div class="info-item">
-                    <ion-icon name="location-outline" color="danger"></ion-icon>
-                    <div class="info-text">
-                      <span class="label">Dirección:</span>
-                      <span class="value">{{ item.direccion_cliente }}</span>
-                    </div>
-                  </div>
-                </ion-col>
-                
-                <ion-col size="12" size-md="6">
-                  <div class="info-item">
-                    <ion-icon name="call-outline" color="success"></ion-icon>
-                    <div class="info-text">
-                      <span class="label">Teléfonos:</span>
-                      <span class="value">{{ item.celular_cliente }} - {{ item.telefono_cliente }}</span>
-                    </div>
-                  </div>
-                </ion-col>
-              </ion-row>
-              
-              <ion-row>
-                <ion-col size="12" size-md="6">
-                  <div class="info-item highlight">
-                    <ion-icon name="wallet-outline" color="warning"></ion-icon>
-                    <div class="info-text">
-                      <span class="label">Saldo:</span>
-                      <span class="value amount">{{ item.saldo_credito | currency }}</span>
-                    </div>
-                  </div>
-                </ion-col>
-                
-                <ion-col size="12" size-md="6">
-                  <div class="info-item highlight">
-                    <ion-icon name="cash-outline" color="success"></ion-icon>
-                    <div class="info-text">
-                      <span class="label">Valor cuota:</span>
-                      <span class="value amount">{{ item.ValorCuota | currency }}</span>
-                    </div>
-                  </div>
-                </ion-col>
-              </ion-row>
-              
-              <ion-row *ngIf="item.acuerdo">
-                <ion-col size="12">
-                  <div class="info-item note-item">
-                    <ion-icon name="chatbubble-outline" color="tertiary"></ion-icon>
-                    <div class="info-text">
-                      <span class="label">Observaciones:</span>
-                      <span class="value note">{{ item.acuerdo }}</span>
-                    </div>
-                  </div>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-card-content>
-        </ion-card>
-      </ion-item>
-      
-      <ion-item-options side="end">
-        <ion-item-option color="tertiary" [routerLink]="['/', 'abonos', item.codigo]">
-          <ion-icon slot="icon-only" name="navigate-outline"></ion-icon>
-          Visitar
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
+  <ion-list>    
+      <ion-item-sliding *ngFor="let item of (results | async)">
+        <ion-item lines="full" button [routerLink]="['/', 'abonos', item.codigo]" detail class="client-item">
+          <ion-avatar slot="start">
+            <ion-icon name="person" color="primary" style="font-size: 2em; background: #f8f8f8; border-radius: 50%; padding: 8px;"></ion-icon>
+          </ion-avatar>
+          <ion-label text-wrap>
+            <h3 class="client-name">{{ item.nombre_cliente }}</h3>
+            <ion-text class="credit-info">
+              <p>
+                <ion-badge color="secondary" class="codigo-badge">
+                  <ion-icon name="card-outline"></ion-icon>
+                   {{ item.codigo }}
+                </ion-badge>
+                <ion-badge color="warning" class="saldo-badge">
+                  <ion-icon name="wallet-outline"></ion-icon>
+                  saldo: {{ item.saldo_credito | currency }}
+                </ion-badge>
+              </p>
+              <p>
+                <ion-badge color="tertiary" class="telefono-badge ion-margin-end">
+                  <ion-icon name="call-outline"></ion-icon>
+                  {{item.celular_cliente}}
+                </ion-badge> 
+                <ion-badge color="success" class="cuota-badge">
+                  <ion-icon name="cash-outline"></ion-icon>
+                  Cuota: {{ item.ValorCuota | currency }}
+                </ion-badge>              
+              </p>
+              <p class="detail-row">
+                <ion-icon name="location-outline" color="danger" size="small"></ion-icon>
+                <span class="location-text">{{item.direccion_cliente}}</span>
+              </p>
+              <p *ngIf="item.acuerdo" class="detail-row">
+                <ion-icon name="chatbubble-outline" color="tertiary" size="small"></ion-icon>
+                <span class="label">Observaciones:</span>
+                <span class="value">{{item.acuerdo}}</span>
+              </p>
+            </ion-text>
+          </ion-label>
+          <ion-reorder slot="end"></ion-reorder>         
+        </ion-item>
+        
+        <ion-item-options side="end">
+          <ion-item-option color="success" [routerLink]="['/', 'abonos', item.codigo]">
+            <ion-icon slot="icon-only" name="cash-outline"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
   </ion-list>
   
   <!-- Estado vacío -->

@@ -1,0 +1,127 @@
+// Estilos para la cabecera de sección
+.section-header {
+  margin-bottom: 16px;
+}
+
+.section-header h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.section-header h4 ion-icon {
+  margin-right: 8px;
+  font-size: 1.3rem;
+}
+
+.section-subtitle {
+  color: var(--ion-color-medium);
+  margin: 0;
+  padding-left: 30px;
+  font-size: 0.9rem;
+}
+
+// Estilos mejorados para los elementos de cliente
+.client-item {
+  --background: var(--ion-color-light);
+  --background-hover: rgba(var(--ion-color-light-rgb), 0.8);
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.client-name {
+  font-weight: 600;
+  color: var(--ion-color-dark);
+  margin-bottom: 8px;
+}
+
+.custom-avatar {
+  margin-right: 10px;
+}
+
+// Estilos para las badges
+.codigo-badge, .saldo-badge, .telefono-badge, .cuota-badge {
+  padding: 6px 8px;
+  border-radius: 6px;
+  margin-right: 8px;
+  margin-bottom: 6px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+}
+
+.codigo-badge ion-icon, 
+.saldo-badge ion-icon, 
+.telefono-badge ion-icon, 
+.cuota-badge ion-icon {
+  margin-right: 4px;
+}
+
+// Estilos para las filas de detalle
+.detail-row {
+  display: flex;
+  align-items: flex-start;
+  margin: 6px 0;
+}
+
+.detail-row ion-icon {
+  margin-right: 6px;
+  margin-top: 3px;
+}
+
+.detail-row .label {
+  font-weight: 500;
+  color: var(--ion-color-medium);
+  margin-right: 5px;
+}
+
+.detail-row .value {
+  color: var(--ion-color-dark);
+}
+
+.location-text {
+  color: var(--ion-color-primary);
+  font-weight: 500;
+}
+
+// Soporte para modo oscuro
+.dark .client-item {
+  --background: rgba(var(--ion-color-dark-rgb), 0.7);
+  --background-hover: rgba(var(--ion-color-dark-rgb), 0.9);
+}
+
+.dark .client-name {
+  color: var(--ion-color-light);
+}
+
+.dark .detail-row .value,
+.dark .location-text {
+  color: var(--ion-color-light);
+}
+
+// Estado vacío
+.empty-state-card {
+  padding: 16px;
+  margin-top: 32px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.empty-state-card ion-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.empty-state-card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.empty-state-card p {
+  color: var(--ion-color-medium);
+  margin-bottom: 16px;
+}

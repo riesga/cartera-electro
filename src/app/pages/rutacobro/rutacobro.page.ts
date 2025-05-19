@@ -7,6 +7,7 @@ import { RutaSinConexion } from '../../interfaces/ruta-sin-conexion';
 import { Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 import { ThemeService } from '../../services/theme.service';
+import { OrdenarRuta } from 'src/app/interfaces/ordernar-ruta';
 
 
 @Component({
@@ -22,6 +23,9 @@ export class RutacobroPage implements OnInit {
   type: SearchType = SearchType.id_cobrador;
   rutaDescargada: RutaSinConexion[] = [];
   isDarkMode: boolean = false;
+
+  // Propiedad para controlar el estado del reordenamiento
+  reorderEnabled: boolean = false;
 
   constructor(private RutaCobro: ClientesService,
     private UserService: UserDataService,
@@ -149,6 +153,77 @@ export class RutacobroPage implements OnInit {
 
   async toggleDarkMode() {
     await this.themeService.setDarkMode(!this.isDarkMode);
+  }
+
+  /**
+   * Manejador del evento de reordenamiento
+   */
+  handleReorder(ev: any) {
+    // Finalizar el reordenamiento y actualizar el orden visual
+    ev.detail.complete();
+    
+    // Obtener el elemento movido
+    const itemToMove = this.results.splice(ev.detail.from, 1)[0];
+    // Insertar en la nueva posición
+    this.results.splice(ev.detail.to, 0, itemToMove);
+    
+    // Aquí puedes implementar la lógica para guardar el nuevo orden en la base de datos
+    // por ejemplo, actualizar una propiedad 'orden' en cada elemento
+    //console.log('Nuevo orden:', this.results);
+    
+    // Opcional: Guardar en localStorage para persistir el orden incluso sin conexión
+    //this.saveReorderedList();
+  }
+  
+  /**
+   * Activa/desactiva el modo de reordenamiento
+   */
+  toggleReorder() {
+    this.reorderEnabled = !this.reorderEnabled;
+    
+    // Si se desactiva el reordenamiento y se hicieron cambios, guardar
+    if (!this.reorderEnabled) {
+      this.saveReorderedList();
+    }
+  }
+  
+  /**
+   * Guarda la lista reordenada
+   */
+  private saveReorderedList() {
+    // Aquí puedes implementar tu lógica para guardar la lista reordenada
+    // Por ejemplo, guardar en localStorage
+    // Actualizar con índices para mantener el orden
+    const reorderedItems = this.results.map((item: any, index: any) => {
+      return { ...item, orderIndex: index };
+    });
+    
+    // Guardar la lista reordenada en localStorage
+    localStorage.setItem('rutaCobroOrdenada', JSON.stringify(reorderedItems));
+    
+
+    // Usar la interfaz en el mapeo para tener tipado correcto
+    const orderData: OrdenarRuta[] = this.results.map((item: any, index: number) => {
+      return {
+        id_usuario: Number(this.UserService.getUserId()),
+        codigo_credito: item.id_credito,
+        orderIndex: index,
+      };
+    });
+
+    console.log('Datos de orden:', orderData);
+    // Enviar el nuevo orden al servidor
+    this.RutaCobro.updateRutaCobroOrder(orderData)
+      .subscribe({
+        next: (response: any) => {
+          console.log('Orden actualizado en el servidor:', response);
+        },
+        error: (error: any) => {
+          console.error('Error al actualizar el orden:', error);
+          // Opcionalmente, guardar localmente para sincronizar más tarde
+          localStorage.setItem('pendingOrderUpdates', JSON.stringify(orderData));
+        }
+      });
   }
 }
 
