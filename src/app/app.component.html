@@ -8,9 +8,12 @@
         </ion-list>
 
         <ion-list *ngIf="loggedIn" lines="none">
-          <ion-list-header>
-            ¡Bienvenido {{userName}}!
-          </ion-list-header>
+              <ion-list-header style="padding-bottom: 10px;">
+              <div class="ion-text-center" style="width: 100%;">
+              <ion-icon name="person-circle-outline" color="secondary" size="large"></ion-icon>
+              <div class="welcome-title">Bienvenido, {{userName}}!</div>
+              </div>
+              </ion-list-header>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
               <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
@@ -20,7 +23,7 @@
           
           <ion-menu-toggle autoHide="false">
             <ion-item button (click)="logout()" detail="false">
-              <ion-icon slot="start" name="log-out"></ion-icon>
+              <ion-icon slot="start" color="danger" name="log-out"></ion-icon>
               <ion-label>
                 Cerrar sesión
               </ion-label>
@@ -32,19 +35,20 @@
         <ion-list *ngIf="!loggedIn" lines="none">
           <ion-menu-toggle autoHide="false">
             <ion-item routerLink="/login" routerLinkActive="aiocnictive" routerDirection="root" detail="false">
-              <ion-icon slot="start" name="log-in"></ion-icon>
+              <ion-icon slot="start" color="secondary" name="log-in"></ion-icon>
               <ion-label>
                 Acceder a la app
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
-        <ion-footer>
+        
+      </ion-content>
+      <ion-footer [translucent]="true">
           <ion-toolbar>
-            <ion-title>Versión 2.0.0 ©</ion-title>            
+        <ion-title style="font-size: 10px;">Versión 2.0.0 ©</ion-title>            
           </ion-toolbar>
         </ion-footer>
-      </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>

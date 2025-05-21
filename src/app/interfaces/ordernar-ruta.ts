@@ -1,5 +1,5 @@
 export interface OrdenarRuta {
     id_usuario: number,
-    codigo_credito: number,
+    id_credito: number,
     orderIndex: number
 }

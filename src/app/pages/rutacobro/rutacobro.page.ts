@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router'
 import { LoadingController } from '@ionic/angular';
 import { RutaSinConexion } from '../../interfaces/ruta-sin-conexion';
 import { Router } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { ThemeService } from '../../services/theme.service';
 import { OrdenarRuta } from 'src/app/interfaces/ordernar-ruta';
 
@@ -34,6 +34,7 @@ export class RutacobroPage implements OnInit {
     private router: Router,
     private alertController: AlertController,
     public navController: NavController,
+    private toastController: ToastController,
     private themeService: ThemeService
   ) {
     this.themeService.darkMode$.subscribe((isDark) => {
@@ -190,7 +191,14 @@ export class RutacobroPage implements OnInit {
   /**
    * Guarda la lista reordenada
    */
-  private saveReorderedList() {
+  async saveReorderedList() {
+
+     const toast = await this.toastController.create({
+      id: 'searchToast',
+      message: 'Reordenando ruta, por favor espere...',
+      duration: 10000 // Duración larga para asegurarnos de que no se cierre antes de recibir resultados
+    });
+    await toast.present();
     // Aquí puedes implementar tu lógica para guardar la lista reordenada
     // Por ejemplo, guardar en localStorage
     // Actualizar con índices para mantener el orden
@@ -206,24 +214,42 @@ export class RutacobroPage implements OnInit {
     const orderData: OrdenarRuta[] = this.results.map((item: any, index: number) => {
       return {
         id_usuario: Number(this.UserService.getUserId()),
-        codigo_credito: item.id_credito,
+        id_credito: item.id_credito,
         orderIndex: index,
       };
     });
 
-    console.log('Datos de orden:', orderData);
     // Enviar el nuevo orden al servidor
     this.RutaCobro.updateRutaCobroOrder(orderData)
       .subscribe({
-        next: (response: any) => {
-          console.log('Orden actualizado en el servidor:', response);
+        next: async (response: any) => {
+          console.log('Orden actualizado en el servidor:', response);          
+          await toast.dismiss();
+          const alert = await this.alertController.create({
+            header: 'Éxito',
+            message: response,
+            buttons: ['OK']
+          });
+          await alert.present();
         },
-        error: (error: any) => {
+        error: async (error: any) => {
           console.error('Error al actualizar el orden:', error);
+          await toast.dismiss();
           // Opcionalmente, guardar localmente para sincronizar más tarde
-          localStorage.setItem('pendingOrderUpdates', JSON.stringify(orderData));
+          //localStorage.setItem('pendingOrderUpdates', JSON.stringify(orderData));
+          this.presentErrorAlert('Error al enviar ruta al servidor');
         }
       });
+  }
+
+  async presentErrorAlert(message: string) {
+    const alert = await this.alertController.create({
+      cssClass: 'error-alert',
+      header: 'Error',
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }
 
