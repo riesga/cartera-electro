@@ -74,6 +74,17 @@ ion-item .item-detail-icon {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.client-item.sin-orden {
+  background: #fff7e6 !important;
+  --background: #fff7e6 !important;
+  border-left: 4px solid #ffa726;
+}
+
+.client-item.sin-orden ion-avatar ion-icon {
+  background: #ffa726 !important;
+  color: #fff !important;
+}
+
 .client-name {
   font-weight: 600;
   color: var(--ion-color-dark);

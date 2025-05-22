@@ -57,7 +57,14 @@ export class RutacobroPage implements OnInit {
     await loading.present();
 
     this.RutaCobro.searchRutaCobros(this.UserService.getUserId()).subscribe(data => {
-      this.results = data;
+      this.results = data;      
+      // Ordenar: primero los que tienen orden === null, luego los demás por orden ascendente
+      this.results.sort((a: any, b: any) => {
+        if (a.orden_cobro === null && b.orden_cobro === null) return 0;
+        if (a.orden_cobro === null) return -1;
+        if (b.orden_cobro === null) return 1;
+        return a.orden_cobro - b.orden_cobro;
+      });
       loading.dismiss();
     });
   }

@@ -35,7 +35,15 @@
   <ion-list>
     <ion-reorder-group [disabled]="!reorderEnabled" (ionItemReorder)="handleReorder($event)">
       <ion-item-sliding *ngFor="let item of results">
-        <ion-item lines="full" button [routerLink]="['/', 'abonos', item.codigo]" detail class="client-item" style="padding-right: 5px;">
+        <ion-item
+  lines="full"
+  button
+  [routerLink]="['/', 'abonos', item.codigo]"
+  detail
+  class="client-item"
+  [ngClass]="{'sin-orden': item.orden_cobro === null}"
+  style="padding-right: 5px;"
+>
           <ion-avatar slot="start">
             <ion-icon name="person" color="primary" style="font-size: 2em; background: #f8f8f8; border-radius: 50%; padding: 8px;"></ion-icon>
           </ion-avatar>
