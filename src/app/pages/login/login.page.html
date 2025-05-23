@@ -3,53 +3,67 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Acceder a la app</ion-title>
+    <ion-title>
+      Acceder a la app
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="login-logo">
-    <img src="assets/Images/Logo411.png" alt="Electromuebles">
+<ion-content class="ion-padding-top">
+  <div class="login-logo" style="display: flex; justify-content: center; align-items: center;">
+    <img src="assets/Images/logoElectro.png" alt="Electromuebles" style="max-width: 360px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
   </div>
-  <form #loginForm="ngForm" novalidate>
-    <ion-list>
-      <ion-item>
-        <ion-label position="stacked" color="dark">Usuario</ion-label>
-        <ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off"
-          required>
-        </ion-input>
-      </ion-item>
-
-      <ion-text color="danger">
-        <p [hidden]="username.valid || submitted == false" class="ion-padding-start">
-          Usuario es requerido
-        </p>
-      </ion-text>
-
-      <ion-item>
-        <ion-label position="stacked" color="dark">Contraseña</ion-label>
-        <ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
-        </ion-input>
-      </ion-item>
-
-      <ion-text color="danger">
-        <p [hidden]="password.valid || submitted == false" class="ion-padding-start">
-          Contraseña es requerida
-        </p>
-      </ion-text>
-    </ion-list>
-
-    <ion-row>
-      <ion-col>
-        <ion-text color="danger">
-          <p *ngIf="error" class="ion-padding-start">
-            {{error}}
-          </p>
-        </ion-text>
-        <ion-button (click)="onLogin(loginForm)" type="submit" size="large" color="success"  expand="block">
-          <ion-icon name="bag-outline"></ion-icon> Ingresar
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </form>
+  <ion-card class="login-card ion-padding-top">
+    <ion-card-header color="light">
+      <ion-card-title class="ion-text-center" style="font-size: 1.2rem; color: var(--ion-color-success); font-weight: 700;">
+        Bienvenido
+      </ion-card-title>
+      <ion-card-subtitle class="ion-text-center" style="color: var(--ion-color-medium);">
+        Ingrese sus credenciales para continuar
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <form #loginForm="ngForm" novalidate>
+        <ion-list lines="none">
+          <ion-item class="login-item">
+            <ion-icon name="person-outline" slot="start" color="success"></ion-icon>
+            <ion-label position="stacked" color="dark">Usuario</ion-label>
+            <ion-input [(ngModel)]="login.username" placeholder="Ingrese el usuario..." name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off" required></ion-input>
+          </ion-item>
+          <ion-text color="danger">
+            <p [hidden]="username.valid || submitted == false" class="ion-padding-start">
+              Usuario es requerido
+            </p>
+          </ion-text>
+          <ion-item class="login-item">
+            <ion-icon name="lock-closed-outline" slot="start" color="success"></ion-icon>
+            <ion-label position="stacked" color="dark">Contraseña</ion-label>
+            <ion-input [(ngModel)]="login.password" placeholder="Digite su contraseña..." name="password" type="password" #password="ngModel" required></ion-input>
+          </ion-item>
+          <ion-text color="danger">
+            <p [hidden]="password.valid || submitted == false" class="ion-padding-start">
+              Contraseña es requerida
+            </p>
+          </ion-text>
+        </ion-list>
+        <ion-row>
+          <ion-col>
+            <ion-text color="danger">
+              <p *ngIf="error" class="ion-padding-start">
+                {{error}}
+              </p>
+            </ion-text>
+            <ion-button (click)="onLogin(loginForm)" type="submit" size="large" color="success" expand="block" shape="round" style="margin-top: 12px;">
+              <ion-icon name="log-in-outline" slot="start"></ion-icon>
+              Ingresar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-card-content>
+  </ion-card>
+  <div class="ion-text-center" style="margin-top: 20px; color: var(--ion-color-medium); font-size: 0.95em;">
+    <ion-icon name="shield-checkmark-outline" color="success"></ion-icon>
+    Su información está protegida y segura.
+  </div>
 </ion-content>

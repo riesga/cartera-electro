@@ -135,9 +135,9 @@ export class AbonoSinConexionPage implements OnInit {
       this.submitForm();
     } catch (error) {
       await toast.dismiss();
-      console.error('Error al obtener la ubicación', error);  
-      //this.crearAbono();    
-      this.presentErrorAlert('Error al obtener datos para el abono');
+      //console.error('Error al obtener la ubicación', error);  
+      this.submitForm();
+      //this.presentErrorAlert('Error al obtener datos para el abono');
     }
   }
 
