@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ToastController, AlertController } from '@ionic/angular';
+import { ToastController, AlertController, NavController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { personCircle, personCircleOutline, sunny, sunnyOutline } from 'ionicons/icons';
 import { Preferences } from '@capacitor/preferences';
@@ -24,7 +24,11 @@ export class SettingsPage implements OnInit {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private themeService: ThemeService, private toastController: ToastController, public alertController: AlertController,) {
+  constructor(
+    private themeService: ThemeService, 
+    private toastController: ToastController, 
+    public navController: NavController,
+    public alertController: AlertController,) {
     // Register icons for use in the application
     addIcons({ personCircle, personCircleOutline, sunny, sunnyOutline });
   }
@@ -111,6 +115,10 @@ export class SettingsPage implements OnInit {
     }
 
 
+  }
+
+  volver() {
+    this.navController.back();
   }
 
 }

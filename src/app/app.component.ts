@@ -5,6 +5,7 @@ import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 import { UserDataService } from './services/user-data.service';
+import { AnimatedSplashComponent } from './components/animated-splash/animated-splash.component';
 
 @Component({
   selector: 'app-root',
@@ -21,9 +22,11 @@ export class AppComponent implements OnInit {
     { title: 'Cobros realizados', url: '/relacion-cobros', icon: 'wallet' },
     { title: 'Configuración', url: '/settings', icon: 'settings' },
   ];
-
   loggedIn = false;
   userName = '';
+  
+  // Controla la visibilidad del splash animado
+  showAnimatedSplash = false;
 
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   
@@ -34,19 +37,30 @@ export class AppComponent implements OnInit {
     private router: Router
   ) {
     this.initializeApp();
-  }
-
-  async initializeApp() {
+  }  async initializeApp() {
     // Esperar a que la plataforma esté lista
     await this.platform.ready();
     
     // Inicializar el tema
     await this.themeService.initialize();
     
-    // Ocultar el splash screen después de que la app esté lista
-    // Esto ocurre automáticamente pero puedes controlarlo aquí si necesitas
-    // una lógica personalizada
+    // Desactivar temporalmente la interacción mientras se muestra el splash
+    document.body.style.pointerEvents = 'none';
+    
+    // Mostrar nuestro splash animado personalizado
+    this.showAnimatedSplash = true;
+    
+    // Ocultar el splash screen nativo después de que la plataforma esté lista
     await SplashScreen.hide();
+    
+    // Timeout de seguridad: si por alguna razón el splash no desaparece, 
+    // forzar su eliminación después de 5 segundos
+    setTimeout(() => {
+      if (this.showAnimatedSplash) {
+        console.log('Forzando la eliminación del splash por timeout de seguridad');
+        this.onSplashFinished();
+      }
+    }, 5000);
   }
 
   async ngOnInit() {
@@ -81,7 +95,6 @@ export class AppComponent implements OnInit {
     this.userData.logout();
     this.router.navigateByUrl('/login');
   }
-
   listenForLoginEvents() {
     window.addEventListener('user:login', () => {
       this.updateLoggedInStatus(true);
@@ -91,5 +104,29 @@ export class AppComponent implements OnInit {
     window.addEventListener('user:logout', () => {
       this.updateLoggedInStatus(false);
     });
+  }  /**
+   * Método que se ejecuta cuando el splash animado ha terminado
+   */
+  onSplashFinished() {
+    // Usar setTimeout para asegurar que se ejecute después del ciclo actual de detección de cambios
+    setTimeout(() => {
+      this.showAnimatedSplash = false;
+      
+      // Asegurarse de que cualquier residuo del splash sea completamente eliminado
+      document.querySelectorAll('.splash-container').forEach(el => {
+        (el as HTMLElement).style.display = 'none';
+        (el as HTMLElement).style.pointerEvents = 'none';
+        (el as HTMLElement).style.visibility = 'hidden';
+        (el as HTMLElement).style.zIndex = '-1';
+      });
+      
+      // Restaurar la capacidad de interacción para toda la aplicación
+      document.body.style.pointerEvents = 'auto';
+      
+      // Forzar un redibujado de la interfaz para asegurarnos de que todo funcione correctamente
+      requestAnimationFrame(() => {
+        document.body.style.transform = 'translateZ(0)';
+      });
+    }, 100);
   }
 }

@@ -1,3 +1,8 @@
+<!-- El splash animado se renderiza fuera del flujo normal del DOM -->
+<div id="splash-container" style="position: absolute; top: 0; left: 0; z-index: 10000;">
+  <app-animated-splash *ngIf="showAnimatedSplash" (splashFinished)="onSplashFinished()"></app-animated-splash>
+</div>
+
 <ion-app>
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">

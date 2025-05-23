@@ -25,6 +25,50 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+/* Animaciones personalizadas para toda la aplicación */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.8); }
+  to { transform: scale(1); }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Clases de utilidad para animaciones */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.animate-fade-out {
+  animation: fadeOut 0.8s ease-in-out;
+}
+
+.animate-scale-up {
+  animation: scaleUp 1s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideInUp 1s ease-out;
+}
+
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------

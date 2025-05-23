@@ -3,10 +3,9 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
   appName: 'Cobros Electromuebles',
-  webDir: 'www',
-  plugins: {
+  webDir: 'www',  plugins: {
     SplashScreen: {
-      launchShowDuration: 3000, // Duración en ms (3 segundos)
+      launchShowDuration: 1000, // Duración reducida a 1 segundo
       launchAutoHide: true,
       backgroundColor: "#ffffffff", // Color de fondo (blanco)
       androidSplashResourceName: "splash", // Nombre de la imagen en Android

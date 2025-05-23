@@ -1,7 +1,7 @@
 {
   "name": "cobros-electromuebles",
   "version": "2.0.0",
-  "author": "Tecnología Electromuebles",
+  "author": "Sistemas Electromuebles",
   "homepage": "https://electromuebles.com.co/",
   "scripts": {
     "ng": "ng",

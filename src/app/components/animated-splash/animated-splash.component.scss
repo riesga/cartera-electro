@@ -1,0 +1,126 @@
+.splash-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999; // Usar un z-index más alto para estar seguro
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  flex-direction: column;
+  pointer-events: none; // Esto permite que los clics pasen a través del splash cuando sea necesario
+}
+
+// Estilo para cuando el componente está oculto - asegura que no interfiera con nada
+:host {
+  &:not(:host-context(*[aria-hidden="true"])) {
+    display: none;
+    pointer-events: none;
+    visibility: hidden;
+    z-index: -1;
+  }
+}
+
+.splash-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto; // Esto permite la interacción con el contenido del splash
+}
+
+.splash-logo {
+  width: 250px;
+  height: auto;
+  margin-bottom: 20px;
+  animation: float-and-rotate 4s ease-in-out infinite;
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
+  position: relative;
+}
+
+/* Efecto de brillo alrededor del logo en lugar de a través de él */
+.splash-logo::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  right: -15px;
+  bottom: -15px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(99, 102, 241, 0.1) 0%,
+    rgba(99, 102, 241, 0) 70%
+  );
+  z-index: -1;
+  animation: pulse-glow 2s infinite alternate;
+}
+
+@keyframes float-and-rotate {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(-1deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0% {
+    opacity: 0.4;
+    transform: scale(0.97);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1.03);
+  }
+}
+
+.credits-text {
+  position: absolute;
+  bottom: 40px;
+  font-size: 14px;
+  color: var(--ion-color-medium);
+  opacity: 0;
+  animation: slideInFromLeft 1.5s ease forwards;
+  animation-delay: 1s; // Retrasa la animación para que se muestre después de que aparezca el logo
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.splash-text {
+  text-align: center;
+  
+  h2 {
+    color: var(--ion-color-success);
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    color: var(--ion-color-medium);
+    font-size: 16px;
+  }
+}

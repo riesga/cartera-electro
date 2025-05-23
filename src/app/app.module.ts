@@ -8,16 +8,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { AnimatedSplashComponent } from './components/animated-splash/animated-splash.component';
 
-@NgModule({
-  declarations: [AppComponent],
-  imports: [
+@NgModule({  declarations: [AppComponent],  imports: [
     BrowserModule, 
     IonicModule.forRoot(), 
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AnimatedSplashComponent
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
